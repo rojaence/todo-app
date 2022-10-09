@@ -1,0 +1,161 @@
+$accent-color: #3a7bfd;
+$accent-color-alt: #3a7bfd50;
+$green-light: #59948b30;
+$green-dark: #59948b60;
+$red-light: #e2564c30;
+$red-dark: #e2564c60;
+$green-hover: #59948b;
+$red-hover: #e2574c;
+$gray: #eeeeee;
+$dark-blue: #232d35;
+// $dark-blue: hsl(200, 15%, 8%);
+$modal-button-color: hsl(235, 19%, 35%);
+$accent-gradient-color: linear-gradient(
+  to bottom right,
+  hsl(192, 100%, 67%),
+  hsl(280, 87%, 65%)
+);
+$warning-light: #ffb300;
+$warning-dark: #ff8f00;
+// Light theme
+
+$lt-color-1: hsl(0, 0%, 98%);
+$lt-color-2: hsl(235, 32%, 92%);
+$lt-color-3: hsl(233, 11%, 84%);
+$lt-color-4: hsl(236, 9%, 61%);
+$lt-color-5: hsl(235, 19%, 35%);
+$lt-hover: rgba(255, 255, 255, 0.2);
+$lt-hover-alt: rgba(255, 255, 255, 0.04);
+
+// Dark theme
+$dt-color-1: hsl(235, 21%, 11%);
+$dt-color-2: hsl(235, 24%, 19%);
+$dt-color-3: hsl(234, 39%, 85%);
+$dt-color-4: hsl(236, 33%, 92%);
+$dt-color-5: hsl(234, 11%, 52%);
+$dt-color-6: hsl(233, 14%, 35%);
+$dt-color-7: hsl(237, 14%, 26%);
+$dt-hover: rgba(0, 0, 0, 0.2);
+$dt-hover-alt: rgba(0, 0, 0, 0.04);
+
+// Background images
+$lt-bg-desktop: url("../assets/images/bg-desktop-light.jpg");
+$lt-bg-mobile: url("../assets/images/bg-mobile-light.jpg");
+$dt-bg-desktop: url("../assets/images/bg-desktop-dark.jpg");
+$dt-bg-mobile: url("../assets/images/bg-mobile-dark.jpg");
+
+// Transitions
+
+:root,
+[data-theme="light"] {
+  --main-bg-color: #{$lt-color-1};
+  --stack-bg-color: #{$lt-color-1};
+  --border-color: #{$lt-color-2};
+  --box-shadow-color: #{$lt-color-3};
+  --hover-box-shadow-color: #{$lt-color-3};
+  --primary-text-color: #{$lt-color-5};
+  --secondary-text-color: #{$lt-color-4};
+  --todo-checked-color: #{$dt-color-3};
+  --text-hover-color: #{$dt-color-1};
+  --button-check-bg-color: #{$lt-color-1};
+  --main-bg-image: #{$lt-bg-mobile};
+  --modal-bg-color: #{$lt-color-1};
+  --modal-wrapper-bg: #{$dt-hover};
+  --modal-button-color: #{$lt-color-5};
+  --modal-box-shadow-color: #{$lt-color-5};
+  --brightness-filter: brightness(0.95);
+  --btn-hover-color: #{$lt-hover};
+  --btn-hover-color-alt: #{$dt-hover-alt};
+  --error-color-backdrop: #{$red-light};
+  --error-color-accent: #{$red-hover};
+  --accent-color: #{$accent-color};
+  --warning-color: #{$warning-light};
+  --accent-color-backdrop: #{$accent-color-alt};
+  --success-color-backdrop: #{$green-light};
+  --success-color-accent: #{$green-hover};
+  --scrollbar-bg: #f0f0f0;
+  --scrollbar-thumb-bg: #{$lt-color-3};
+  --scrollbar-thumb-hover: #{$lt-color-4};
+  @media screen and (min-width: 768px) {
+    --main-bg-image: #{$lt-bg-desktop};
+  }
+}
+
+[data-theme="dark"] {
+  --main-bg-color: #{$dt-color-1};
+  --stack-bg-color: #{$dt-color-2};
+  --border-color: #{$dt-color-7};
+  --box-shadow-color: #{$dt-color-1};
+  --hover-box-shadow-color: #{$dt-color-1};
+  --primary-text-color: #{$dt-color-3};
+  --todo-checked-color: #{$dt-color-6};
+  --button-check-bg-color: #{$dt-color-2};
+  --text-hover-color: #{$lt-color-1};
+  --main-bg-image: #{$dt-bg-mobile};
+  --modal-bg-color: #{$dt-color-7};
+  --modal-wrapper-bg: #{$lt-hover};
+  --modal-button-color: #{$dt-color-3};
+  --modal-box-shadow-color: #{$dt-color-1};
+  --brightness-filter: brightness(1.05);
+  --btn-hover-color: #{$dt-hover};
+  --btn-hover-color-alt: #{$lt-hover-alt};
+  --error-color-backdrop: #{$red-dark};
+  --error-color-accent: #{$red-hover};
+  --accent-color: #{$accent-color};
+  --warning-color: #{$warning-dark};
+  --accent-color-backdrop: #{$accent-color-alt};
+  --success-color-backdrop: #{$green-dark};
+  --success-color-accent: #{$green-hover};
+  --scrollbar-bg: #1f2133;
+  --scrollbar-thumb-bg: #{$dt-color-6};
+  --scrollbar-thumb-hover: #{$dt-color-5};
+  @media screen and (min-width: 768px) {
+    --main-bg-image: #{$dt-bg-desktop};
+  }
+}
+
+:root {
+  --fade-transition: background-color 0.1s, color 0.1s;
+  --light-header-color: hsl(0, 0%, 98%);
+  --accent-gradient-color: #{$accent-gradient-color};
+}
+
+body {
+  margin: 0;
+  padding: 0 1rem;
+  min-height: 100vh;
+}
+
+@for $i from 1 through 5 {
+  .elevation-#{$i} {
+    box-shadow: #{$i}px #{$i}px #{$i * 3}px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.error {
+  &:hover {
+    background-color: var(--error-color-backdrop);
+  }
+  &-accent {
+    border-color: var(--error-color-backdrop);
+    background-color: var(--error-color-backdrop);
+    &:hover {
+      color: $lt-color-1;
+      background-color: var(--error-color-accent);
+    }
+  }
+}
+
+.success {
+  &:hover {
+    background-color: var(--success-color-backdrop);
+  }
+  &-accent {
+    background-color: var(--success-color-backdrop);
+    border-color: var(--success-color-backdrop);
+    &:hover {
+      color: $lt-color-1;
+      background-color: var(--success-color-accent);
+    }
+  }
+}

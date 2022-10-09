@@ -1,0 +1,21 @@
+.task {
+  user-select: none;
+  display: grid;
+  padding: 1rem 1.5rem;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  border-top: 1px solid var(--border-color);
+  background-color: var(--stack-bg-color);
+  box-sizing: border-box;
+  transition: background-color .15s, border-color .15s, color .15s;
+  &:hover {
+    .button--autohide {
+      opacity: 1;
+    }
+  }
+  &--checked {
+    color: var(--todo-checked-color);
+  }
+}

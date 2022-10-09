@@ -1,0 +1,65 @@
+.container {
+  position: relative;
+}
+
+.tasks {
+  border-radius: 0.5rem;
+  position: relative;
+}
+
+.list {
+  background-color: var(--stack-bg-color);
+  border-radius: .5rem .5rem 0 0;
+  height: 400px;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  margin-bottom: 0;
+  list-style: none;
+  padding: 0;
+}
+
+.list-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--stack-bg-color);
+  padding: .5rem 1rem .5rem 1.5rem;
+  border-radius: 0 0 .5rem .5rem;
+  border-top: 1px solid var(--border-color);
+}
+
+.filter-control {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: .4rem;
+  background-color: var(--stack-bg-color);
+  border-radius: .5rem;
+  margin-top: 1rem;
+  .button {
+    font-weight: bold;
+  }
+}
+
+
+@media screen and (min-width: 768px) {
+  .filter-control {
+    background-color: transparent;
+    position: absolute;
+    left: calc(50% - 110px);
+    bottom: 0;
+    max-width: 200px;
+    margin: 0 auto;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .filter-control {
+    $i: 3;
+    box-shadow: #{$i}px #{$i}px #{$i * 3}px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.button:hover {
+  background-color: var(--btn-hover-color-alt);
+}

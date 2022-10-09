@@ -1,0 +1,18 @@
+.task-form {
+  background-color: transparent;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  &__fieldset {
+    outline: none;
+    border: none;
+    padding: 1rem 1.5rem;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    margin: 0;
+    gap: 1rem;
+    background-color: var(--stack-bg-color);
+  }
+  .radio:hover, .button:hover {
+    background-color: var(--btn-hover-color-alt);
+  }
+}
