@@ -14,11 +14,11 @@ function Alert({
   closeAlert,
 }) {
 
-  const modalContent = useRef(null);
+  const successButton = useRef(null);
 
   useEffect(() => {
     if (show) {
-      modalContent.current.focus();
+      successButton.current.focus();
     }
   }, [show]);
 
@@ -41,8 +41,6 @@ function Alert({
       <div className="modal-wrapper__content">
         <article
           className={alertClassStyle()}
-          ref={ modalContent }
-          tabIndex='0'
           onClick={handleAlertContainerClick}
         >
           <Icon name={icon} size={100} />
@@ -60,6 +58,7 @@ function Alert({
             {confirmButton && (
               <Button
                 text="Ok"
+                ref={successButton}
                 onClick={closeAlert}
                 customClass="success-accent"
                 outlined

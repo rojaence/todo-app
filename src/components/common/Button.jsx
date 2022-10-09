@@ -1,19 +1,23 @@
+import { forwardRef } from "react";
 import Icon from "../Icon";
 import "../../styles/button.scss";
 
-function Button({
-  text = "",
-  icon = "",
-  autoHide = false,
-  autoHideIcon = false,
-  customStyle = {},
-  customClass = "",
-  iconSize = 48,
-  fab = false,
-  outlined = false,
-  color = '',
-  onClick = () => {},
-}) {
+const Button = forwardRef(function Button(
+  {
+    text = "",
+    icon = "",
+    autoHide = false,
+    autoHideIcon = false,
+    customStyle = {},
+    customClass = "",
+    iconSize = 48,
+    fab = false,
+    outlined = false,
+    color = "",
+    onClick = () => {},
+  },
+  ref
+) {
   const buttonClassStyle = () => {
     let classStyle = ["button"];
     if (fab) classStyle.push("button--fab");
@@ -29,12 +33,13 @@ function Button({
     <button
       style={customStyle}
       className={buttonClassStyle()}
+      ref={ref}
       onClick={onClick}
     >
       {icon ? <Icon name={icon} size={iconSize} /> : null}
       <span className="button__text">{text}</span>
     </button>
   );
-}
+});
 
 export default Button;

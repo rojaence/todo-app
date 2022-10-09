@@ -14,8 +14,8 @@ function TaskList() {
   const { tasks, getTasksByState, indexedDBConnection } =
     useContext(TaskContext);
 
-  const [isOpenErrorAlert, openErrorAlert, closeErrorAlert, errorMessage] =
-    useAlert(false);
+  const taskAlert = useAlert(false);
+
   const [stateFilter, setStateFilter] = useState("all");
 
   useEffect(() => {
@@ -36,10 +36,28 @@ function TaskList() {
       filtered = tasks.slice().filter((t) => t.completed);
     }
     setFilteredTasks(filtered);
-  }, [stateFilter]);
+  }, [stateFilter, tasks]);
 
   const handleStateFilter = (event, param) => {
     setStateFilter(param);
+  };
+
+  const clearBtnClick = () => {
+    taskAlert.openAlert({
+      message: "Hello world!!",
+      color: "warning",
+      icon: "help-outline",
+    });
+  };
+
+  const deleteCompletedTasks = () => {
+    try {
+
+    } catch(error) {
+      console.log("🚀 ~ file: TaskList.jsx ~ line 57 ~ deleteCompletedTasks ~ error", error)
+    } finally {
+      taskAlert.closeAlert();
+    }
   };
 
   const onDragEnd = (result) => {
@@ -137,12 +155,17 @@ function TaskList() {
           </Droppable>
           <div className="list-footer">
             <span className="list-footer__counter">
-              {pendingTasks} {pendingTasks > 1 ? "items left" : "item left"}
+              {pendingTasks} {pendingTasks === 1 ? "item left" : "items left"}
             </span>
-            <Button text="Clear Completed" />
+            <Button text="Clear Completed" onClick={clearBtnClick} />
           </div>
         </div>
         <FilterControl />
+        <Alert
+          {...taskAlert.config}
+          show={taskAlert.isOpen}
+          closeAlert={taskAlert.closeAlert}
+        ></Alert>
       </div>
     </DragDropContext>
   );

@@ -16,8 +16,6 @@ import Button from "./components/common/Button";
 function App() {
   const { setThemeOnInit } = useContext(ThemeContext);
 
-  const [isOpenAppAlert, openAppAlert, closeAppAlert, appAlertConfig] = useAlert(false);
-
   useEffect(() => {
     setThemeOnInit();
   }, []);
@@ -35,7 +33,6 @@ function App() {
       <Footer />
 
       {/* <Alert message={ appAlertConfig.message } color={ appAlertConfig.color } icon={ appAlertConfig.icon } show={isOpenAppAlert} closeAlert={closeAppAlert}></Alert> */}
-
     </Fragment>
   );
 }

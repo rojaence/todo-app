@@ -1,17 +1,12 @@
 import { useState, useContext } from "react";
 import TaskContext from "@/context/tasks/TaskContext";
 
-import Alert from "@/components/Alert";
-import { useAlert } from "@/hooks/useAlert";
-
 import Button from "@/components/common/Button";
 import Radio from "@/components/common/Radio";
 import "@/styles/task.scss";
 
 function Task({ data = {}, customStyle = {} }) {
   const { deleteTask, updateTask } = useContext(TaskContext);
-  const [isOpenAppAlert, openAppAlert, closeAppAlert, appAlertConfig] =
-    useAlert(false);
 
   const taskClassStyle = () => {
     let classStyle = ["task"];
@@ -65,7 +60,7 @@ function Task({ data = {}, customStyle = {} }) {
         onChange={(e) => handleCheck(e)}
       />
       <span className="task__title" style={titleDecoration}>
-        {data.title} {String(data.completed)}
+        {data.title}
       </span>
       <Button
         customClass={"error"}

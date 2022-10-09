@@ -11,5 +11,5 @@ export const useAlert = (initialValue = false, initialConfig = {}) => {
 
   const closeAlert = () => setIsOpen(false);
 
-  return [isOpen, openAlert, closeAlert, config];
+  return {isOpen, openAlert, closeAlert, config};
 };

@@ -1,4 +1,4 @@
-import { useState, useContext, Fragment } from "react";
+import { useState, useContext, Fragment, useRef } from "react";
 import TaskContext from "../../context/tasks/TaskContext";
 import Button from "../common/Button";
 import Input from "../common/Input";
@@ -6,18 +6,25 @@ import "../../styles/taskForm.scss";
 
 import { useAlert } from "../../hooks/useAlert";
 import Alert from "../Alert";
+import { useEffect } from "react";
 
 function TaskForm() {
   const [taskTitle, setTaskTitle] = useState("");
   const { tasks, addTask } = useContext(TaskContext);
-  const [isOpenFormAlert, openFormAlert, closeFormAlert, formAlertConfig] =
-    useAlert(false);
+
+  const formAlert = useAlert(false);
+
+  const titleInput = useRef(null);
+
+  useEffect(() => {
+    if (!formAlert.isOpen) titleInput.current.focus();
+  }, [formAlert.isOpen])
 
   const submitTaskForm = async (e) => {
     e.preventDefault();
     try {
       if (!taskTitle) {
-        openFormAlert({
+        formAlert.openAlert({
           message: "Tittle cannot be empty",
           icon: "alert-outline",
           color: "warning",
@@ -25,7 +32,7 @@ function TaskForm() {
       }
       else {
         if (taskExists()) {
-          openFormAlert({
+          formAlert.openAlert({
             message: "Task already exists",
             icon: "alert-outline",
             color: "error",
@@ -36,7 +43,7 @@ function TaskForm() {
         }
       }
     } catch (error) {
-      openFormAlert({
+      formAlert.openAlert({
         message: "Error al guardar tarea",
         icon: "close-outline",
         color: "error",
@@ -65,15 +72,13 @@ function TaskForm() {
             outlined
             onClick={submitTaskForm}
           />
-          <Input onChange={titleInputHandle} value={taskTitle} hint="Create a new todo..." />
+          <Input onChange={titleInputHandle} ref={titleInput} value={taskTitle} hint="Create a new todo..." />
         </fieldset>
       </form>
       <Alert
-        message={formAlertConfig.message}
-        icon={formAlertConfig.icon}
-        color={formAlertConfig.color}
-        show={isOpenFormAlert}
-        closeAlert={closeFormAlert}
+        {...formAlert.config}
+        show={formAlert.isOpen}
+        closeAlert={formAlert.closeAlert}
       />
     </Fragment>
   );
