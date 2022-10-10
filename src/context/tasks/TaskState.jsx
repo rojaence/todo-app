@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useReducer } from "react";
 import { GET_TASKS } from "../types";
 import TaskContext from "./TaskContext";
@@ -5,42 +6,30 @@ import TaskReducer from "./TaskReducer";
 
 const TaskState = (props) => {
   const initialState = {
-    tasks: [
-      /* { id: "1", title: "Complete online JavaScript course", completed: true },
-      { id: "2", title: "Jog around the park 3x", completed: false },
-      { id: "3", title: "10 minutes meditation", completed: false },
-      { id: "4", title: "Read for 1 hour", completed: false },
-      { id: "5", title: "Pick up groceries", completed: false },
-      {
-        id: "6",
-        title: "Complete Todo App on Frontend Mentor",
-        completed: false,
-      }, */
-    ],
-    order: [],
+    tasks: [],
+    maxPriority: 0,
     todoAppDB: null,
   };
   const [state, dispatch] = useReducer(TaskReducer, initialState);
 
   const getTasks = () => {
     try {
-      // TODO: Obtener las tareas de localStorage
       const transaction = state.todoAppDB.transaction(["todoList"], "readonly");
       const objectStore = transaction.objectStore("todoList");
       const request = objectStore.openCursor();
       let todoData = [];
+      state.maxPriority = 0;
       request.onsuccess = (e) => {
         const cursor = e.target.result;
         if (cursor) {
           todoData.push(cursor.value);
-          // IMPORTANT: Evaluar en este punto algún dato como el orden de la tarea
+          if (cursor.value.priority > state.maxPriority)
+            state.maxPriority = cursor.value.priority;
           cursor.continue();
         } else {
           dispatch({ type: GET_TASKS, payload: todoData });
         }
       };
-      /* const res = state.tasks;
-      dispatch({ type: GET_TASKS, payload: res }); */
     } catch (error) {
       console.log(error);
     }
@@ -84,6 +73,7 @@ const TaskState = (props) => {
     let data = {
       title: title,
       completed: false,
+      priority: state.maxPriority + 1,
     };
     const transaction = state.todoAppDB.transaction(["todoList"], "readwrite");
     const objectStore = transaction.objectStore("todoList");
@@ -91,36 +81,51 @@ const TaskState = (props) => {
     getTasks();
   };
 
+  const reorderTasks = (target) => {
+    // Todo: Realizar la modificación de la prioridad de las tareas según el nuevo orden del target
+  };
+
   const deleteTask = async (key) => {
+    let reference = state.tasks.find((t) => t.title === key);
     const transaction = state.todoAppDB.transaction(["todoList"], "readwrite");
     const objectStore = transaction.objectStore("todoList");
-    await objectStore.delete(key);
-    getTasks();
+    const request = objectStore.openCursor();
+    request.onsuccess = async (e) => {
+      const cursor = e.target.result;
+      if (cursor) {
+        let item = cursor.value;
+        if (item.priority > reference.priority) {
+          item.priority -= 1;
+          await objectStore.put(item);
+        }
+        cursor.continue();
+      } else {
+        await objectStore.delete(key);
+        getTasks();
+      }
+    };
   };
 
   const updateTask = async (data) => {
-    console.log('data recibida')
-    console.log(data)
     const transaction = state.todoAppDB.transaction(["todoList"], "readwrite");
     const objectStore = transaction.objectStore("todoList");
     await objectStore.put(data);
-    getTasks()
+    getTasks();
   };
 
+  const value = useMemo(() => ({
+    getTasks,
+    tasks: state.tasks,
+    maxPriority: state.maxPriority,
+    getTasksByState,
+    indexedDBConnection,
+    addTask,
+    deleteTask,
+    updateTask,
+  }));
+
   return (
-    <TaskContext.Provider
-      value={{
-        getTasks,
-        tasks: state.tasks,
-        getTasksByState,
-        indexedDBConnection,
-        addTask,
-        deleteTask,
-        updateTask
-      }}
-    >
-      {props.children}
-    </TaskContext.Provider>
+    <TaskContext.Provider value={value}>{props.children}</TaskContext.Provider>
   );
 };
 

@@ -61,7 +61,7 @@ function TaskList() {
   };
 
   const onDragEnd = (result) => {
-    console.log(result);
+  console.log("🚀 ~ file: TaskList.jsx ~ line 64 ~ onDragEnd ~ result", result)
   };
 
   const activeStyle = {
