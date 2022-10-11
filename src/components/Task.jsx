@@ -18,7 +18,7 @@ function Task({ data = {}, customStyle = {} }) {
     console.log("🚀 ~ file: Task.jsx ~ line 39 ~ handleCheck ~ e", e)
     try {
       let newData = {
-        title: data.title,
+        ...data,
         completed: !data.completed,
       };
       console.log(

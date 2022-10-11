@@ -27,6 +27,15 @@ const TaskState = (props) => {
             state.maxPriority = cursor.value.priority;
           cursor.continue();
         } else {
+          todoData.sort((a, b) => {
+            if (a.priority < b.priority) {
+              return -1;
+            } else if (a.priority > b.priority) {
+              return 1;
+            } else {
+              return 0;
+            }
+          });
           dispatch({ type: GET_TASKS, payload: todoData });
         }
       };
@@ -71,7 +80,7 @@ const TaskState = (props) => {
 
   const addTask = async ({ title }) => {
     let data = {
-      title: title,
+      title,
       completed: false,
       priority: state.maxPriority + 1,
     };
@@ -81,8 +90,37 @@ const TaskState = (props) => {
     getTasks();
   };
 
-  const reorderTasks = (target) => {
-    // Todo: Realizar la modificación de la prioridad de las tareas según el nuevo orden del target
+  const reorderTasks = (target, reference) => {
+    const transaction = state.todoAppDB.transaction(["todoList"], "readwrite");
+    const objectStore = transaction.objectStore("todoList");
+    const request = objectStore.openCursor();
+    request.onsuccess = async (e) => {
+      const cursor = e.target.result;
+      if (cursor) {
+        let item = cursor.value;
+        if (item.title == target.title) {
+          item.priority = reference.priority;
+        } else if (item.title != target.title) {
+          if (
+            target.priority < reference.priority &&
+            item.priority > target.priority &&
+            item.priority <= reference.priority
+          ) {
+            item.priority -= 1;
+          } else if (
+            target.priority > reference.priority &&
+            item.priority < target.priority &&
+            item.priority >= reference.priority
+          ) {
+            item.priority += 1;
+          }
+        }
+        await objectStore.put(item);
+        cursor.continue();
+      } else {
+        getTasks();
+      }
+    };
   };
 
   const deleteTask = async (key) => {
@@ -122,6 +160,7 @@ const TaskState = (props) => {
     addTask,
     deleteTask,
     updateTask,
+    reorderTasks,
   }));
 
   return (

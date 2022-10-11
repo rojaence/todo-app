@@ -11,7 +11,7 @@ import Alert from "../Alert";
 function TaskList() {
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [pendingTasks, setPendingTasks] = useState(0);
-  const { tasks, getTasksByState, indexedDBConnection } =
+  const { tasks, getTasksByState, reorderTasks, indexedDBConnection } =
     useContext(TaskContext);
 
   const taskAlert = useAlert(false);
@@ -52,16 +52,39 @@ function TaskList() {
 
   const deleteCompletedTasks = () => {
     try {
-
-    } catch(error) {
-      console.log("🚀 ~ file: TaskList.jsx ~ line 57 ~ deleteCompletedTasks ~ error", error)
+    } catch (error) {
+      console.log(
+        "🚀 ~ file: TaskList.jsx ~ line 57 ~ deleteCompletedTasks ~ error",
+        error
+      );
     } finally {
       taskAlert.closeAlert();
     }
   };
 
-  const onDragEnd = (result) => {
-  console.log("🚀 ~ file: TaskList.jsx ~ line 64 ~ onDragEnd ~ result", result)
+  const onDragEnd = async (result) => {
+    const { destination, source } = result;
+    try {
+      if (destination && source) {
+        const targetNode = tasks.find(
+          (task) => task.title === filteredTasks[result.source.index].title
+        );
+        const referenceNode = tasks.find(
+          (task) => task.title === filteredTasks[result.destination.index].title
+        );
+        if (newNode.title != referenceNode.title) {
+          setFilteredTasks([]);
+          await reorderTasks(targetNode, referenceNode);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+      taskAlert.openAlert({
+        message: "Ha ocurrido un error",
+        color: "error",
+        icon: "close-outline",
+      });
+    }
   };
 
   const activeStyle = {
@@ -93,25 +116,6 @@ function TaskList() {
           onClick={(event) => handleStateFilter(event, "completed")}
         />
       </div>
-    );
-  };
-
-  const TestList = () => {
-    return (
-      <ul className="list">
-        {getTasksByState("all").map((t) => {
-          return (
-            <li
-              key={t.id}
-              className={`list__item task ${
-                t.completed ? "task--checked" : ""
-              }`}
-            >
-              {t.title}
-            </li>
-          );
-        })}
-      </ul>
     );
   };
 
