@@ -63,7 +63,7 @@ function Task({ data = {}, customStyle = {} }) {
         fab
         icon="close"
         autoHide
-        iconSize={18}
+        iconSize={24}
         onClick={() => handleDeleteBtn(data.title)}
       />
     </article>

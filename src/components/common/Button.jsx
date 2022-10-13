@@ -36,8 +36,8 @@ const Button = forwardRef(function Button(
       ref={ref}
       onClick={onClick}
     >
-      {icon ? <Icon name={icon} size={iconSize} /> : null}
-      <span className="button__text">{text}</span>
+      {icon && <Icon name={icon} size={iconSize} />}
+      {text && <span className="button__text">{text}</span>}
     </button>
   );
 });
