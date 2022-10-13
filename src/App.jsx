@@ -9,10 +9,6 @@ import TaskForm from "./components/containers/TaskForm";
 import TaskList from "./components/containers/TaskList";
 import "./app.scss";
 
-import Alert from "./components/Alert";
-import { useAlert } from "./hooks/useAlert";
-import Button from "./components/common/Button";
-
 function App() {
   const { setThemeOnInit } = useContext(ThemeContext);
 
@@ -27,12 +23,9 @@ function App() {
         <main className="main">
           <TaskForm />
           <TaskList />
-          {/* <Button text='Show example alert' onClick={ () => openAppAlert({ message: 'Hello world!!', color: 'warning', icon: 'help-outline' }) }/> */}
         </main>
       </TaskState>
       <Footer />
-
-      {/* <Alert message={ appAlertConfig.message } color={ appAlertConfig.color } icon={ appAlertConfig.icon } show={isOpenAppAlert} closeAlert={closeAppAlert}></Alert> */}
     </Fragment>
   );
 }

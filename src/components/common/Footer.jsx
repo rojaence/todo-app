@@ -3,7 +3,7 @@ function Footer() {
     <footer className="footer">
       <p className="attribution">
         Coded By{" "}
-        <a href="#" className="attribution__link">
+        <a href="https://github.com/rojaence" target='blank' className="attribution__link">
           Ronny Endara
         </a>
       </p>
