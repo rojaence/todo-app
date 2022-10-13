@@ -8,6 +8,7 @@ function Alert({
   message = "",
   cancelButton = false,
   confirmButton = true,
+  confirmAction = () => {},
   show = false,
   icon = "check-outline",
   color = "success",
@@ -23,6 +24,11 @@ function Alert({
   }, [show]);
 
   const handleAlertContainerClick = (e) => e.stopPropagation();
+
+  const confirmBtnOnClick = (e) => {
+    confirmAction();
+    closeAlert();
+  }
 
   const modalClassStyle = () => {
     let classStyle = ["modal-wrapper"];
@@ -59,7 +65,7 @@ function Alert({
               <Button
                 text="Ok"
                 ref={successButton}
-                onClick={closeAlert}
+                onClick={confirmBtnOnClick}
                 customClass="success-accent"
                 outlined
               />

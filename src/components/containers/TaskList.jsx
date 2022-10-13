@@ -11,7 +11,7 @@ import Alert from "../Alert";
 function TaskList() {
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [pendingTasks, setPendingTasks] = useState(0);
-  const { tasks, getTasksByState, reorderTasks, indexedDBConnection } =
+  const { tasks, reorderTasks, indexedDBConnection } =
     useContext(TaskContext);
 
   const taskAlert = useAlert(false);
@@ -42,25 +42,37 @@ function TaskList() {
     setStateFilter(param);
   };
 
-  const clearBtnClick = () => {
-    taskAlert.openAlert({
-      message: "Hello world!!",
-      color: "warning",
-      icon: "help-outline",
-    });
-  };
-
-  const deleteCompletedTasks = () => {
+  
+  const deleteCompletedTasks = async () => {
     try {
+      console.log('hola mundo')      
     } catch (error) {
       console.log(
         "🚀 ~ file: TaskList.jsx ~ line 57 ~ deleteCompletedTasks ~ error",
         error
-      );
-    } finally {
-      taskAlert.closeAlert();
-    }
-  };
+        );
+      }
+    };
+
+    const clearBtnClick = () => {
+      if (tasks.filter(t => t.completed).length > 0) {
+        taskAlert.openAlert({
+          message: "Are you sure you want to delete all completed tasks?",
+          color: "warning",
+          icon: "help-outline",
+          cancelButton: true,
+          confirmButton: true,
+          confirmAction: deleteCompletedTasks,
+        });
+      } else {
+        taskAlert.openAlert({
+          message: 'There are no completed tasks',
+          color: 'warning',
+          icon: "alert-outline",
+          confirmButton: true,
+        })
+      }
+    };
 
   const onDragEnd = async (result) => {
     const { destination, source } = result;
@@ -72,7 +84,7 @@ function TaskList() {
         const referenceNode = tasks.find(
           (task) => task.title === filteredTasks[result.destination.index].title
         );
-        if (newNode.title != referenceNode.title) {
+        if (targetNode.title != referenceNode.title) {
           setFilteredTasks([]);
           await reorderTasks(targetNode, referenceNode);
         }

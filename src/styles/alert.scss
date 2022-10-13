@@ -1,7 +1,7 @@
 .alert {
   background-color: var(--modal-bg-color);
   border-radius: 0.5rem;
-  max-width: 500px;
+  max-width: 450px;
   min-width: 250px;
   padding: 1.5rem 1rem;
   display: flex;
@@ -35,5 +35,11 @@
     .icon {
       fill: var(--warning-color);
     }
+  }
+}
+
+.modal {
+  &__title {
+    text-align: center;
   }
 }

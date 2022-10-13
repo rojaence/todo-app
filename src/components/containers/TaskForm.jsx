@@ -40,6 +40,7 @@ function TaskForm() {
         } else {
           await addTask({ title: taskTitle.trim() });
           setTaskTitle('');
+          
         }
       }
     } catch (error) {
