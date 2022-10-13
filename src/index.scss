@@ -115,7 +115,7 @@ $dt-bg-mobile: url("../assets/images/bg-mobile-dark.jpg");
 }
 
 :root {
-  --fade-transition: background-color 0.1s, color 0.1s;
+  --fade-transition: background-color 0.15s, color 0.15s;
   --light-header-color: hsl(0, 0%, 98%);
   --accent-gradient-color: #{$accent-gradient-color};
 }

@@ -6,7 +6,7 @@ import Radio from "@/components/common/Radio";
 import "@/styles/task.scss";
 
 function Task({ data = {}, customStyle = {} }) {
-  const { deleteTask, updateTask } = useContext(TaskContext);
+  const { deleteTask, updateTask, getTasks } = useContext(TaskContext);
 
   const taskClassStyle = () => {
     let classStyle = ["task"];
@@ -15,18 +15,12 @@ function Task({ data = {}, customStyle = {} }) {
   };
 
   const handleCheck = async (e) => {
-    console.log("🚀 ~ file: Task.jsx ~ line 39 ~ handleCheck ~ e", e)
     try {
       let newData = {
         ...data,
         completed: !data.completed,
       };
-      console.log(
-        "🚀 ~ file: Task.jsx ~ line 28 ~ handleCheck ~ newData",
-        newData
-      );
       await updateTask(newData);
-      console.log("Se debió actualizar la data")
     } catch (error) {
       console.log(error);
     }
@@ -37,6 +31,8 @@ function Task({ data = {}, customStyle = {} }) {
       await deleteTask(key);
     } catch (error) {
       console.log(error);
+    } finally {
+      getTasks();
     }
   };
 

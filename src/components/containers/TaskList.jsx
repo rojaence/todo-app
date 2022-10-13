@@ -11,10 +11,10 @@ import Alert from "../Alert";
 function TaskList() {
   const [filteredTasks, setFilteredTasks] = useState([]);
   const [pendingTasks, setPendingTasks] = useState(0);
-  const { tasks, reorderTasks, indexedDBConnection } =
-    useContext(TaskContext);
+  const { tasks, reorderTasks, indexedDBConnection, deleteTaskGroup } = useContext(TaskContext);
 
   const taskAlert = useAlert(false);
+  const confirmAlert = useAlert(false);
 
   const [stateFilter, setStateFilter] = useState("all");
 
@@ -42,37 +42,39 @@ function TaskList() {
     setStateFilter(param);
   };
 
-  
   const deleteCompletedTasks = async () => {
     try {
-      console.log('hola mundo')      
+      let completedTasks = tasks.filter(t => t.completed);
+      await deleteTaskGroup(completedTasks);
     } catch (error) {
-      console.log(
-        "🚀 ~ file: TaskList.jsx ~ line 57 ~ deleteCompletedTasks ~ error",
-        error
-        );
-      }
-    };
+      taskAlert.openAlert({
+        message: "An errror occurred while deleting completed tasks.",
+        color: "error",
+        icon: "close-outline",
+        confirmButton: true,
+      });
+    }
+  };
 
-    const clearBtnClick = () => {
-      if (tasks.filter(t => t.completed).length > 0) {
-        taskAlert.openAlert({
-          message: "Are you sure you want to delete all completed tasks?",
-          color: "warning",
-          icon: "help-outline",
-          cancelButton: true,
-          confirmButton: true,
-          confirmAction: deleteCompletedTasks,
-        });
-      } else {
-        taskAlert.openAlert({
-          message: 'There are no completed tasks',
-          color: 'warning',
-          icon: "alert-outline",
-          confirmButton: true,
-        })
-      }
-    };
+  const clearBtnClick = () => {
+    if (tasks.filter((t) => t.completed).length > 0) {
+      taskAlert.openAlert({
+        message: "Are you sure you want to delete all completed tasks?",
+        color: "warning",
+        icon: "help-outline",
+        cancelButton: true,
+        confirmButton: true,
+        confirmAction: deleteCompletedTasks,
+      });
+    } else {
+      taskAlert.openAlert({
+        message: "There are no completed tasks",
+        color: "warning",
+        icon: "alert-outline",
+        confirmButton: true,
+      });
+    }
+  };
 
   const onDragEnd = async (result) => {
     const { destination, source } = result;
@@ -181,6 +183,11 @@ function TaskList() {
           {...taskAlert.config}
           show={taskAlert.isOpen}
           closeAlert={taskAlert.closeAlert}
+        ></Alert>
+        <Alert
+          {...confirmAlert.config}
+          show={confirmAlert.isOpen}
+          closeAlert={confirmAlert.closeAlert}
         ></Alert>
       </div>
     </DragDropContext>

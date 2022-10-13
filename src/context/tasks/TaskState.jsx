@@ -139,6 +139,40 @@ const TaskState = (props) => {
         cursor.continue();
       } else {
         await objectStore.delete(key);
+      }
+    };
+  };
+
+  const deleteTaskGroup = async (taskGroup) => {
+    let currentPriority = 0;
+    taskGroup.sort((a, b) => {
+      return a.priority - b.priority;
+    });
+    let activeTasks = state.tasks
+      .slice()
+      .filter((task) => !taskGroup.some((t) => t.title === task.title));
+    for (let index = 0; index < activeTasks.length; index++) {
+      if (activeTasks[index].priority !== currentPriority + 1) {
+        activeTasks[index].priority = currentPriority + 1;
+      }
+      currentPriority++;
+    }
+    const transaction = state.todoAppDB.transaction(["todoList"], "readwrite");
+    const objectStore = transaction.objectStore("todoList");
+    const request = objectStore.openCursor();
+    request.onsuccess = async (e) => {
+      const cursor = e.target.result;
+      if (cursor) {
+        if (taskGroup.some((task) => task.title === cursor.key))
+          await objectStore.delete(cursor.key);
+        else {
+          let task = activeTasks.find((task) => task.title === cursor.key);
+          if (task.priority !== cursor.value.priority) {
+            await objectStore.put(task);
+          }
+        }
+        cursor.continue();
+      } else {
         getTasks();
       }
     };
@@ -160,6 +194,7 @@ const TaskState = (props) => {
     addTask,
     deleteTask,
     updateTask,
+    deleteTaskGroup,
     reorderTasks,
   }));
 
