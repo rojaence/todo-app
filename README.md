@@ -55,7 +55,7 @@ Drag and Drop
 
 ### Links
 
-- Live Site URL: [Todo App](https://rojaence.github.io/FrontendMentor-Challenges/todo-app/)
+- Live Site URL: [Todo App](https://rojaence.github.io/todo-app/)
 
 ## My process
 
