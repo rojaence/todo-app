@@ -49,7 +49,7 @@ Modal window
 
 Drag and Drop  
 <div align="center" width="100%">
-    <img src="./assets/screenshots/DragDropDemo.gif"> 
+    <img src="./assets/screenshots/dragDropDemo.gif"> 
 </div>
 
 
