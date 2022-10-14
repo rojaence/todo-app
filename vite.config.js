@@ -4,7 +4,7 @@ import * as path from 'path';
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/rest-countries-api/',
+  base: '/todo-app/',
   plugins: [react()],
   resolve: {
     alias: [{find: '@', replacement: path.resolve(__dirname, 'src')}],
