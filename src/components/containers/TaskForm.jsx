@@ -64,11 +64,12 @@ function TaskForm() {
   return (
     <Fragment>
       <form className="task-form elevation-3">
-        <fieldset className="task-form__fieldset">
+        <fieldset className="task-form__fieldset" onClick={() => titleInput.current.focus()}>
           <Button
             icon="add"
-            iconSize={16}
+            iconSize={18}
             fab
+            customStyle={{ height: '34px', width: '34px' }}
             outlined
             onClick={submitTaskForm}
           />
