@@ -1,8 +1,8 @@
 import { useMemo } from "react";
 import { useReducer } from "react";
-import { GET_TASKS } from "../types";
-import TaskContext from "./TaskContext";
-import TaskReducer from "./TaskReducer";
+import { GET_TASKS } from "@/context/types";
+import TaskContext from "@/context/tasks/TaskContext";
+import TaskReducer from "@/context/tasks/TaskReducer";
 
 const TaskState = (props) => {
   const initialState = {

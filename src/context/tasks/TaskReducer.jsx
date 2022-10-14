@@ -1,4 +1,4 @@
-import { GET_TASKS, ADD_TASK, DELETE_TASK, UPDATE_TASK } from "../types"
+import { GET_TASKS, ADD_TASK, DELETE_TASK, UPDATE_TASK } from "@/context/types"
 
 export default (state, action) => {
   const { payload, type } = action;

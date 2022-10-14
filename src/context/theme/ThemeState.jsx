@@ -1,6 +1,6 @@
 import { useReducer } from "react";
-import ThemeContext from "./ThemeContext";
-import ThemeReducer from "./ThemeReducer";
+import ThemeContext from "@/context/theme/ThemeContext";
+import ThemeReducer from "@/context/theme/ThemeReducer";
 
 const ThemeProvider = (props) => {
   const initialState = {

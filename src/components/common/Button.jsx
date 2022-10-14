@@ -1,6 +1,6 @@
 import { forwardRef } from "react";
-import Icon from "../Icon";
-import "../../styles/button.scss";
+import Icon from "@/components/Icon";
+import "@/styles/button.scss";
 
 const Button = forwardRef(function Button(
   {

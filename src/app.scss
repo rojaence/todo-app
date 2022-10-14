@@ -10,11 +10,16 @@
 
 #root {
   position: relative;
+  min-height: 100vh;
 }
 
-.header, .main, .footer {
+.header, .main {
   max-width: 600px;
   margin: 0 auto;
+}
+
+.footer {
+  margin-top: auto;
 }
 
 .header {

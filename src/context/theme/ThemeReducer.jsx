@@ -1,4 +1,4 @@
-import { SELECT_THEME } from "../types";
+import { SELECT_THEME } from "@/context/types";
 
 export default (state, action) => {
   const { payload, type } = action;

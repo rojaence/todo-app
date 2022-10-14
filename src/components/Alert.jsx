@@ -1,7 +1,7 @@
 import Icon from "./Icon";
-import Button from "./common/Button";
-import "../styles/alert.scss";
-import "../styles/modal.scss";
+import Button from "@/components/common/Button";
+import "@/styles/alert.scss";
+import "@/styles/modal.scss";
 import { useEffect, useRef } from "react";
 
 function Alert({

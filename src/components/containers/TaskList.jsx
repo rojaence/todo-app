@@ -1,12 +1,12 @@
 import { useContext, useState, useEffect } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import TaskContext from "../../context/tasks/TaskContext";
-import Task from "../Task";
-import Button from "../common/Button";
-import "../../styles/taskList.scss";
+import TaskContext from "@/context/tasks/TaskContext";
+import Task from "@/components/Task";
+import Button from "@/components/common/Button";
+import "@/styles/taskList.scss";
 
-import { useAlert } from "../../hooks/useAlert";
-import Alert from "../Alert";
+import { useAlert } from "@/hooks/useAlert";
+import Alert from "@/components/Alert";
 
 function TaskList() {
   const [filteredTasks, setFilteredTasks] = useState([]);

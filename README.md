@@ -34,16 +34,16 @@ Users should be able to:
 
 Light theme
 
-![](./assets/screenshots/light-main-screenshot.png)  
+![](./assets/screenshots/lightTheme.png)  
 
 Dark Theme  
 
-![](./assets/screenshots/dark-main-screenshot.png)  
+![](./assets/screenshots/darkTheme.png)  
 
 Modal window  
 
-![](./assets/screenshots/light-modal-screenshot.png)  
-![](./assets/screenshots/dark-modal-screenshot.png)  
+![](./assets/screenshots/modal1.png)  
+![](./assets/screenshots/modal2.png)  
 
 Drag and Drop  
 ![](./assets/screenshots/drag-screenshot.png)  
@@ -57,52 +57,79 @@ Drag and Drop
 ### Built with
 
 - Semantic HTML5 markup
-- CSS custom properties
 - Flexbox
 - CSS Grid
-- Normalize
+- SCSS
 - Mobile-first workflow
-- Vanilla JS
 - Local Storage
 - IndexedDB
+- [React](https://reactjs.org) - JS Framework
+- [react-beautiful-dnd](https://github.com/atlassian/react-beautiful-dnd) - Beautiful and accesible drag and drop
 
 ### What I learned
 
-How to create a modal window only HTML, CSS, and JS
+How to create a modal window using a custom component and hook
 
-```html
-<div class="modal" id="modal-window" data-modal="window">
-<div class="modal__content" data-modal="content">
-  <img alt="alert icon" class="modal__icon" data-modal="content" id="modal-icon">
-  <p class="modal__message" id="modal-message" data-modal="content" id="modal-message"></p>
-  <div class="modal__actions">
-    <button class="modal__button modal__button--confirm" data-action="confirm" id="modal-button-confirm">Ok</button>
-    <button class="modal__button modal__button--cancel" data-action="cancel" id="modal-button-cancel">Cancel</button>
-  </div>
-</div>
+```jsx
+// Render in custom component - Alert.jsx
+
+  return (
+    <div className={modalClassStyle()} onClick={closeAlert}>
+      <div className="modal-wrapper__content">
+        <article
+          className={alertClassStyle()}
+          onClick={handleAlertContainerClick}
+        >
+          <Icon name={icon} size={100} />
+          <h2 className="modal__title">{message}</h2>
+          <footer className="alert__actions">
+            {cancelButton && (
+              <Button
+                text="Cancel"
+                onClick={closeAlert}
+                customClass="error-accent"
+                outlined
+              />
+            )}
+
+            {confirmButton && (
+              <Button
+                text="Ok"
+                ref={successButton}
+                onClick={confirmBtnOnClick}
+                customClass="success-accent"
+                outlined
+              />
+            )}
+          </footer>
+        </article>
+      </div>
+    </div>
+
+
+// Custom hook - useAlert.jsx
+import { useState } from "react";
+
+export const useAlert = (initialValue = false, initialConfig = {}) => {
+  const [isOpen, setIsOpen] = useState(initialValue);
+  const [config, setConfig] = useState(initialConfig);
+
+  const openAlert = (newConfig) => {
+    setConfig(newConfig);
+    setIsOpen(true);
+  };
+
+  const closeAlert = () => setIsOpen(false);
+
+  return {isOpen, openAlert, closeAlert, config};
+};
+
 ```
-  
-Show each modal window case with a function  
-```js
-const showModalWindow = (message, type) => {
-  modalMessage.textContent = message;
-  modalConfirmButton.focus();
-  switch (type) {
-    case "alert":
-      modalIcon.setAttribute("src", "../assets/images/alert.svg");
-      modalConfirmButton.setAttribute("data-action", "confirm");
-      modalConfirmButton.style.display = "block";
-      modalCancelButton.style.display = "none";
-      break;
-    case "question":
-      modalIcon.setAttribute("src", "../assets/images/question.svg");
-      modalConfirmButton.setAttribute("data-action", "clear-completed");
-      modalConfirmButton.style.display = "block";
-      modalCancelButton.style.display = "block";
-      break;
-  }
-  modalWindow.classList.add("modal--active");
-}
+
+```jsx
+// Usage Example - TaskList.jsx
+
+
 ```
 
 ### Useful resources
@@ -113,3 +140,5 @@ const showModalWindow = (message, type) => {
 
 - Frontend Mentor - [@rojaence](https://www.frontendmentor.io/profile/rojaence)
 - Twitter - [@EndaraRonny](https://www.twitter.com/EndaraRonny)
+- LinkedIn - [Ronny Endara](https://www.linkedin.com/in/ronny-endara)
+- Platzi - [Profile](https://platzi.com/p/rojaence/)

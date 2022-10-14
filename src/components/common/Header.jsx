@@ -1,6 +1,6 @@
 import { useContext } from 'react'
-import ThemeContext from '../../context/theme/ThemeContext'
-import Button from './Button'
+import ThemeContext from '@/context/theme/ThemeContext'
+import Button from '@/components/common/Button'
 
 function Header() {
 

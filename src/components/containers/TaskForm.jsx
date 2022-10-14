@@ -1,11 +1,11 @@
 import { useState, useContext, Fragment, useRef } from "react";
-import TaskContext from "../../context/tasks/TaskContext";
-import Button from "../common/Button";
-import Input from "../common/Input";
-import "../../styles/taskForm.scss";
+import TaskContext from "@/context/tasks/TaskContext";
+import Button from "@/components/common/Button";
+import Input from "@/components/common/Input";
+import "@/styles/taskForm.scss";
 
-import { useAlert } from "../../hooks/useAlert";
-import Alert from "../Alert";
+import { useAlert } from "@/hooks/useAlert";
+import Alert from "@/components/Alert";
 import { useEffect } from "react";
 
 function TaskForm() {
@@ -40,7 +40,6 @@ function TaskForm() {
         } else {
           await addTask({ title: taskTitle.trim() });
           setTaskTitle('');
-          
         }
       }
     } catch (error) {
@@ -73,7 +72,7 @@ function TaskForm() {
             outlined
             onClick={submitTaskForm}
           />
-          <Input onChange={titleInputHandle} ref={titleInput} value={taskTitle} hint="Create a new todo..." />
+          <Input customStyle={{caretColor: 'var(--accent-color)'}} onChange={titleInputHandle} ref={titleInput} value={taskTitle} hint="Create a new todo..." />
         </fieldset>
       </form>
       <Alert

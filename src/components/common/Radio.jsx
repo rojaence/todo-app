@@ -1,12 +1,10 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef} from "react";
 import Icon from "../Icon";
-import "../../styles/radio.scss";
+import "@/styles/radio.scss";
 
 function Radio({
   icon = "dot",
   iconSize = 48,
-  autoHideIcon = false,
-  customActiveStyle = {},
   checked = false,
   onChange = () => {},
 }) {

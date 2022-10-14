@@ -1,15 +1,15 @@
 import { Fragment } from "react";
 import MoonIcon from "./icons/MoonIcon";
-import SunIcon from "./icons/SunIcon";
-import AddIcon from "./icons/AddIcon";
-import CheckIcon from "./icons/CheckIcon";
-import CloseIcon from "./icons/CloseIcon";
-import DotIcon from "./icons/DotIcon";
-import AlertOutlineIcon from "./icons/AlertOutlineIcon"
-import CheckOutlineIcon from "./icons/CheckOutlineIcon"
-import HelpOutlineIcon from "./icons/HelpOutlineIcon";
-import CloseOutlineIcon from "./icons/CloseOutlineIcon"
-import "../styles/icon.scss";
+import SunIcon from "@/components/icons/SunIcon";
+import AddIcon from "@/components/icons/AddIcon";
+import CheckIcon from "@/components/icons/CheckIcon";
+import CloseIcon from "@/components/icons/CloseIcon";
+import DotIcon from "@/components/icons/DotIcon";
+import AlertOutlineIcon from "@/components/icons/AlertOutlineIcon"
+import CheckOutlineIcon from "@/components/icons/CheckOutlineIcon"
+import HelpOutlineIcon from "@/components/icons/HelpOutlineIcon";
+import CloseOutlineIcon from "@/components/icons/CloseOutlineIcon"
+import "@/styles/icon.scss";
 
 function Icon({ name = "moon", size = 48 }) {
   const icons = {
