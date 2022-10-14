@@ -76,7 +76,7 @@ function TaskList() {
     }
   };
 
-  const onDragEnd = async (result) => {
+  const onDragEnd = (result) => {
     const { destination, source } = result;
     try {
       if (destination && source) {
@@ -88,13 +88,13 @@ function TaskList() {
         );
         if (targetNode.title != referenceNode.title) {
           setFilteredTasks([]);
-          await reorderTasks(targetNode, referenceNode);
+          reorderTasks(targetNode, referenceNode);
         }
       }
     } catch (e) {
       console.log(e);
       taskAlert.openAlert({
-        message: "Ha ocurrido un error",
+        message: "An error occurred",
         color: "error",
         icon: "close-outline",
       });
